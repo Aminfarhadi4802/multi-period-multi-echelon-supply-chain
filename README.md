@@ -63,11 +63,14 @@ All decision variables are continuous and non-negative.
 
 The objective is to minimize the total supply chain cost:
 
-Total Cost =
-    Production Cost
-  + Factory-to-Warehouse Transportation Cost
-  + Warehouse-to-Market Transportation Cost
-  + Inventory Holding Cost
+$$
+\begin{aligned}
+TotalSupplyChainCost =\;& ProductionCost \\
+&+ FactoryToWarehouseTransportationCost \\
+&+ WarehouseToMarketTransportationCost \\
+&+ InventoryHoldingCost
+\end{aligned}
+$$
 
 
 ---
@@ -81,24 +84,70 @@ The optimization model incorporates the following operational and business const
 
 Monthly production at each factory cannot exceed its available production capacity.
 
+$$
+Production_{f,t} \leq ProductionCapacity_f
+$$
+
+for every factory $f$ and planning period $t$.
 ### 2. Warehouse Capacity
 
 Ending inventory at each distribution center cannot exceed its storage capacity.
+
+$$
+Inventory_{w,t} \leq WarehouseCapacity_w
+$$
+
+for every distribution center $w$ and planning period $t$.
 
 ### 3. Inventory Balance
 
 Inventory is balanced across consecutive periods according to:
 
-Beginning Inventory
-+ Incoming Shipments
-- Outgoing Shipments
-= Ending Inventory
+$$
+BeginningInventory_{w,t}
++
+\sum_{f \in F} Shipment^{FW}_{f,w,t}
+-
+\sum_{m \in M} Shipment^{WM}_{w,m,t}
+=
+Inventory_{w,t}
+$$
 
-For the first planning period, the initial inventory of each distribution center is used as the beginning inventory.
+For the first planning period, the initial inventory of each distribution center is used as the beginning inventory:
+
+$$
+InitialInventory_w
++
+\sum_{f \in F} Shipment^{FW}_{f,w,January}
+-
+\sum_{m \in M} Shipment^{WM}_{w,m,January}
+=
+Inventory_{w,January}
+$$
+
+For subsequent periods:
+
+$$
+Inventory_{w,t-1}
++
+\sum_{f \in F} Shipment^{FW}_{f,w,t}
+-
+\sum_{m \in M} Shipment^{WM}_{w,m,t}
+=
+Inventory_{w,t}
+$$
 
 ### 4. Demand Satisfaction
 
 The demand of every customer market must be fully satisfied in every planning period.
+
+$$
+\sum_{w \in W} Shipment^{WM}_{w,m,t}
+=
+Demand_{m,t}
+$$
+
+for every market $m$ and planning period $t$.
 
 Shortages are not permitted.
 
@@ -106,20 +155,49 @@ Shortages are not permitted.
 
 At least 30% of the production from the Tehran Factory must be shipped through the Qom Distribution Center in each planning period.
 
+$$
+Shipment^{FW}_{Tehran,Qom,t}
+\geq
+0.30 \times Production_{Tehran,t}
+$$
+
+for every planning period $t$.
+
 ### 6. Ahvaz Receiving Restriction
 
 Due to temporary maintenance activities, the Ahvaz Distribution Center can receive at most 1,200 tons per month.
+
+$$
+\sum_{f \in F} Shipment^{FW}_{f,Ahvaz,t}
+\leq
+1200
+$$
+
+for every planning period $t$.
 
 ### 7. Mashhad Customer Agreement
 
 At least 400 tons per month delivered to the Mashhad Market must originate from the Mashhad Distribution Center.
 
+$$
+Shipment^{WM}_{Mashhad,Mashhad,t}
+\geq
+400
+$$
+
+for every planning period $t$.
+
 ### 8. Factory Flow Balance
 
 All products manufactured at each factory during a planning period must be shipped to distribution centers during the same period.
 
-Production
-= Total Factory-to-Warehouse Shipments
+$$
+Production_{f,t}
+=
+\sum_{w \in W} Shipment^{FW}_{f,w,t}
+$$
+
+for every factory $f$ and planning period $t$.
 
 ## Input Data
 
@@ -185,10 +263,9 @@ The following index sets are used to formulate the supply chain optimization mod
 | $T$ | Set of planning periods |
 
 The planning horizon consists of four monthly periods:
-
-\[
+$$
 T = \{Jan, Feb, Mar, Apr\}
-\]
+$$
 ### Parameters
 
 The following parameters are used to define the operational characteristics, costs, transportation distances, customer demand, and business requirements of the supply chain network.
@@ -243,22 +320,21 @@ The optimization model determines four main categories of decision variables:
 
 All decision variables are continuous and non-negative:
 
-\[
+$$
 Production_{f,t} \geq 0
-\]
+$$
 
-\[
+$$
 Shipment^{FW}_{f,w,t} \geq 0
-\]
+$$
 
-\[
+$$
 Shipment^{WM}_{w,m,t} \geq 0
-\]
+$$
 
-\[
+$$
 Inventory_{w,t} \geq 0
-\]
-
+$$
 for all applicable combinations of factories, warehouses, markets, and planning periods.
 ### Objective Function
 
@@ -277,9 +353,7 @@ The objective function is formulated as:
 \min Z =
 \sum_{f \in F}\sum_{t \in T}
 Production_{f,t} \times ProductionCost_f
-\]
-
-\[
+ 
 +
 \sum_{f \in F}\sum_{w \in W}\sum_{t \in T}
 Shipment^{FW}_{f,w,t}
@@ -338,7 +412,7 @@ Inventory conservation must be maintained at every distribution center during ea
 
 For the first planning period:
 
-\[
+$$
 InitialInventory_w
 +
 \sum_{f \in F} Shipment^{FW}_{f,w,t}
@@ -346,11 +420,11 @@ InitialInventory_w
 \sum_{m \in M} Shipment^{WM}_{w,m,t}
 +
 Inventory_{w,t}
-\]
+$$
 
 For subsequent periods:
 
-\[
+$$
 Inventory_{w,t-1}
 +
 \sum_{f \in F} Shipment^{FW}_{f,w,t}
@@ -358,11 +432,11 @@ Inventory_{w,t-1}
 \sum_{m \in M} Shipment^{WM}_{w,m,t}
 +
 Inventory_{w,t}
-\]
+$$
 
-\[
-\forall w \in W,\; t \in T
-\]
+$$
+\forall w \in W,\quad t \in T
+$$
 
 #### 4. Demand Satisfaction Constraint
 
