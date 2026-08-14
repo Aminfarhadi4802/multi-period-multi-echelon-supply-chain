@@ -8,9 +8,9 @@ The model determines optimal production, transportation, and inventory decisions
 
 This project develops a mathematical optimization model for a hypothetical nationwide dairy supply chain operated by Pars Dairy Co.
 
-The supply chain consists of manufacturing plants, regional distribution centers, and customer markets. Products are manufactured at factories, transported to distribution centers, and then delivered to customer markets.
+The supply chain consists of manufacturing plants, regional distribution centers, and customer markets. Products are manufactured at factories, transported to distribution centers, and then delive[...]
 
-The model considers a four-month planning horizon covering January through April. Production, transportation, and inventory decisions are optimized simultaneously to satisfy all customer demand at minimum total supply chain cost.
+The model considers a four-month planning horizon covering January through April. Production, transportation, and inventory decisions are optimized simultaneously to satisfy all customer demand at[...]
 
 ## Supply Chain Structure
 
@@ -329,7 +329,7 @@ The total cost consists of four main components:
 The objective function is formulated as:
 
 $$
-\min Z = \sum_{f \in F}\sum_{t \in T} Production_{f,t} \times ProductionCost_f + \sum_{f \in F}\sum_{w \in W}\sum_{t \in T} Shipment^{FW}_{f,w,t} \times Distance^{FW}_{f,w} \times TransportationCost
+\min Z = \sum_{f \in F}\sum_{t \in T} Production_{f,t} \times ProductionCost_f + \sum_{f \in F}\sum_{w \in W}\sum_{t \in T} Shipment^{FW}_{f,w,t} \times Distance^{FW}_{f,w} \times TransportationC[...]
 $$
 
 $$
@@ -451,7 +451,7 @@ The model was successfully solved to optimality, producing an optimal supply cha
 | Termination Condition | Optimal |
 | Total Supply Chain Cost | 901,705,250,000 Toman |
 
-The optimal solution determines the production, transportation, and inventory decisions required to satisfy all customer demand while respecting the operational and contractual constraints of the supply chain network.
+The optimal solution determines the production, transportation, and inventory decisions required to satisfy all customer demand while respecting the operational and contractual constraints of the[...]
 
 ---
 
@@ -473,7 +473,7 @@ This repository contains the complete supply chain optimization model including:
 
 ## Author
 
-Developed for Pars Dairy Co. supply chain optimization.
+author : Mohammad Amin Farhadi. IE student at Ferdowsi University of Mashhad
 
 ## License
 
