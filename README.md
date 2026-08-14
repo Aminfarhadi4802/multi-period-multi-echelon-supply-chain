@@ -329,11 +329,10 @@ The total cost consists of four main components:
 The objective function is formulated as:
 
 $$
-\min Z = \sum_{f \in F}\sum_{t \in T} Production_{f,t} \times ProductionCost_f + \sum_{f \in F}\sum_{w \in W}\sum_{t \in T} Shipment^{FW}_{f,w,t} \times Distance^{FW}_{f,w} \times TransportationC[...]
-$$
-
-$$
-+ \sum_{w \in W}\sum_{m \in M}\sum_{t \in T} Shipment^{WM}_{w,m,t} \times Distance^{WM}_{w,m} \times TransportationCost + \sum_{w \in W}\sum_{t \in T} Inventory_{w,t} \times HoldingCost_w
+\min Z = \sum_{f\in F}\sum_{t\in T} Production_{f,t} \times ProductionCost_f
++ \sum_{f\in F}\sum_{w\in W}\sum_{t\in T} Shipment^{FW}_{f,w,t} \times Distance^{FW}_{f,w} \times TransportationCost
++ \sum_{w\in W}\sum_{m\in M}\sum_{t\in T} Shipment^{WM}_{w,m,t} \times Distance^{WM}_{w,m} \times TransportationCost
++ \sum_{w\in W}\sum_{t\in T} Inventory_{w,t} \times HoldingCost_w
 $$
 
 where $Z$ represents the total supply chain operating cost.
